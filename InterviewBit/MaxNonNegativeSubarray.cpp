@@ -1,25 +1,28 @@
+#define ll long long int
+
 vector<int> Solution::maxset(vector<int> &A) {
-    long long int currSum = 0, maxSum = 0, 
-    start = 0, currStart = 0, end = -1;
-    for(int i=0; i<A.size(); i++) {
-        currSum += A[i];
+    ll currMax = INT_MIN, retMax = INT_MIN, l = -1, r = -1, start = 0;
+    for(int i = 0; i < A.size(); i++) {
         if(A[i] < 0) {
-            currSum = 0;
-            currStart = i+1;
+            currMax = INT_MIN;
+            start = i + 1;
         }
-        if(currSum > maxSum || (currSum >= maxSum && i-currStart > end - start)) {
-            start = currStart;
-            maxSum = currSum;
-            end = i;
-        }    
-        // cout << currSum << " " << maxSum << endl;
+        else {
+            currMax += A[i];
+            if(retMax < currMax || (retMax == currMax && i - start > 
+            r - l)) {
+                retMax = currMax;
+                r = i;
+                l = start;
+            }
+        }
     }
-    vector<int> res;
-    for(int i = start; i <= end; i++) {
-        if(A[i] < 0)
-            return {};
-        res.push_back(A[i]);
+    if(l == -1)
+        return {};
+    vector<int> ret;
+    for(int i = l; i <= r; i++) {
+        ret.push_back(A[i]);
     }
-    return res;    
+    return ret;
 }
 
