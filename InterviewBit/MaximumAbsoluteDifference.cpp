@@ -1,13 +1,14 @@
 int Solution::maxArr(vector<int> &A) {
-    int mx1, mx2, mn1, mn2;
-    mx1 = mx2 = INT_MIN;
-    mn1 = mn2 = INT_MAX;
+    int maxDiff = INT_MIN, minDiff = INT_MAX, maxSum = INT_MIN, 
+    minSum = INT_MAX, ret = 0;
     for(int i = 0; i < A.size(); i++) {
-        mx1 = max(mx1, A[i] + i);
-        mx2 = max(mx2, A[i] - i);
-        mn1 = min(mn1, A[i] + i);
-        mn2 = min(mn2, A[i] - i);
+        maxSum = max(maxSum, A[i] + i);
+        maxDiff = max(maxDiff, A[i] - i);
+        minSum = min(minSum, A[i] + i);
+        minDiff = min(minDiff, A[i] - i);
     }
-    return max(mx1 - mn1, mx2 - mn2);
+    ret = max(ret, maxSum - minSum);
+    ret = max(ret, maxDiff - minDiff);
+    return ret;
 }
 
