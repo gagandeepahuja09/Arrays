@@ -1,36 +1,38 @@
 vector<int> Solution::repeatedNumber(const vector<int> &A) {
-    int xxor = 0;
+    int xxor = A[0];
     int n = A.size();
-    for(int i=0; i<A.size(); i++) {
+    for(int i = 1; i < n; i++) {
         xxor ^= A[i];
-        xxor ^= (i+1);
     }
-    // Get LSB set bit in xor result
-    int setBit = xxor & (~(xxor - 1));
+    for(int i = 1; i <= n; i++) {
+        xxor ^= i;
+    }
+    vector<int> ret(2, 0);
     int x = 0, y = 0;
-    for(int i=0; i < n; i++) {
-        if(A[i] & setBit)
-            x = x ^ A[i];
+    int sb = xxor & (~(xxor - 1));
+    for(int i = 0; i < n; i++) {
+        if(A[i] & sb)
+            x ^= A[i];
         else
-            y = y ^ A[i];
-        if(i+1 & setBit)
-            x = x ^ (i+1);
-        else
-            y = y ^ (i+1);
+            y ^= A[i];
     }
-    vector<int> res(2);
-    for(int i=0; i<n; i++) {
+    for(int i = 1; i <= n; i++) {
+        if(i & sb)
+            x ^= i;
+        else
+            y ^= i;
+    }
+    for(int i = 0; i < n; i++) {
         if(A[i] == x) {
-            res[0] = x;
-            res[1] = y;
-            break;
+            ret[0] = x;
+            ret[1] = y;
+            return ret;
         }
-        else if(A[i] == y) {
-            res[0] = y;
-            res[1] = x;
-            break;
+        if(A[i] == y) {
+            ret[0] = y;
+            ret[1] = x;
+            return ret;
         }
     }
-    return res;
 }
 
