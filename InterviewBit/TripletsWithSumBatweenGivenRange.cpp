@@ -1,34 +1,27 @@
 int Solution::solve(vector<string> &A) {
-    int n = A.size();
     double a = stod(A[0]), b = stod(A[1]), c = stod(A[2]);
-    for(int i=3; i<n; i++) {
-        if((a + b + c) > 1 && (a + b + c) < 2)
+    for(int i = 3; i < A.size(); i++) {
+        if(a + b + c > 1 && a + b + c < 2)
             return 1;
         else if(a + b + c >= 2) {
-            // Replace max number with the current number    
-            if(a > b && a > c) {
+            double mx = max(a, max(b, c));
+            if(mx == a)
                 a = stod(A[i]);
-            }
-            else if(b > c) {
+            else if(mx == b)
                 b = stod(A[i]);
-            }
-            else 
+            else
                 c = stod(A[i]);
         }
-        else if((a + b + c) <= 1) {
-            // Replace min num with current
-            if(a < b && a < c) {
+        else {
+            double mn = min(a, min(b, c));
+            if(mn == a)
                 a = stod(A[i]);
-            }
-            else if(b < c) {
+            else if(mn == b)
                 b = stod(A[i]);
-            }
-            else 
+            else
                 c = stod(A[i]);
         }
-        if((a + b + c) > 1 && (a + b + c) < 2)
-            return 1;
-        return 0;    
     }
+    return (a + b + c > 1 && a + b + c < 2);
 }
 
