@@ -21,6 +21,7 @@ int Solution::maximumGap(const vector<int> &A) {
             i++;
         }
     }
+
     return maxDiff;
 }
 
