@@ -1,19 +1,17 @@
 bool Solution::hotel(vector<int> &arrive, vector<int> &depart, int K) {
-    sort(arrive.begin(), arrive.end());
-    sort(depart.begin(), depart.end());
-    
-    int n = arrive.size(), i = 0, j = 0;
-    int rooms = 0;
-    while(i < n && j < n) {
-        if(arrive[i] < depart[j]) {
-            rooms++;
-            i++;
-        }
-        else {
-            rooms--;
-            j++;
-        }
-        if(rooms > K)
+    vector<pair<int, int>> p;
+    for(int i = 0; i < arrive.size(); i++) {
+        p.push_back({ arrive[i], 1 });
+        p.push_back({ depart[i], 0 });
+    }
+    sort(p.begin(), p.end());
+    int cnt = 0;
+    for(int i = 0; i < p.size(); i++) {
+        if(p[i].second == 1)
+            cnt++;
+        else
+            cnt--;
+        if(cnt > K)
             return false;
     }
     return true;
