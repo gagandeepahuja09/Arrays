@@ -1,46 +1,16 @@
-/*
-Next Permutation
-
-Implement the next permutation, which rearranges numbers into the numerically next greater permutation of numbers.
-
-If such arrangement is not possible, it must be rearranged as the lowest possible order ie, sorted in an ascending order.
-
-The replacement must be in-place, do not allocate extra memory.
-
-Examples:
-
-1,2,3 → 1,3,2
-
-3,2,1 → 1,2,3
-
-1,1,5 → 1,5,1
-
-20, 50, 113 → 20, 113, 50
-*/
-
-// This is the region which cannot be increased to next permutation
-int idxPeak(vector<int>& A) {
-    int i = A.size() - 1;
-    while(A[i] <= A[i - 1]) {
-        i--;
-    }
-    return i;
-}
-
-int lastIdxOfGrt(vector<int>& A, int val) {
-    int i = A.size() - 1;
-    while(A[i] <= val) {
-        i--;
-    }
-    return i;
-}
-
 void Solution::nextPermutation(vector<int> &A) {
-    int pivot = idxPeak(A) - 1;
-    if(pivot != -1) {
-        int successor = lastIdxOfGrt(A, A[pivot]);
-        swap(A[pivot], A[successor]);
+    int n = A.size();
+    int i = n - 2;
+    while(i >= 0 && A[i] >= A[i + 1]) {
+        i--;
     }
-    reverse(A.begin() + pivot + 1, A.end());
+    if(i >= 0) {
+        int j = n - 1;
+        while(j > 0 && A[j] < A[i]) {
+            j--;
+        }
+        swap(A[i], A[j]);
+    }
+    reverse(A.begin() + i + 1, A.end());
 }
 
